@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<script>
+"use strict";
+
+let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
+
+socket.onopen = function(e) {
+  alert("[open] The connection is created");
+  alert("Sending data to the server");
+  socket.send("Меня зовут Джон");
+};
+
+socket.onmessage = function(event) {
+  alert(`[message] The data is received: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] The conection is closed clear, cod = ${event.code} cause = ${event.reason}`);
+  } else {
+    // например, сервер убил процесс или сеть недоступна
+    // обычно в этом случае event.code 1006
+    alert('[close] Соединение прервано');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
+</script>
